@@ -1,0 +1,17 @@
+drop database if exists backcli;
+
+create database backcli;
+
+use backcli;
+
+drop table if exists account_login;
+/** 登录信息表 */
+create table `account_login` (
+    `id` bigint(20) not null auto_increment,
+    `created_time` datetime default current_timestamp comment '创建时间',
+    `modified_time` datetime default current_timestamp on update current_timestamp comment '修改时间',
+    `deprecated` bit not null default '0' comment '是否弃用',
+    `username` varchar(50) not null comment '账号',
+    `password` varchar(50) not null comment '密码',
+    primary key (`id`)
+) engine=innodb default charset=utf8mb4 comment='登录信息表';
