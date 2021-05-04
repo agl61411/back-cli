@@ -2,10 +2,15 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yi.backcli.dao.AccountLoginMapper">
+<mapper namespace="com.yi.backcli.dao.AccountLoginDao">
 
     <select id="findByUsername" resultType="com.yi.backcli.entity.AccountLogin">
-        select * from
+        select
+               id, created_time, modified_time, deprecated, username, password
+        from
+             account_login
+        where
+              username = #{username};
     </select>
 
 </mapper>

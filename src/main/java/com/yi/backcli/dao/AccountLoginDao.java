@@ -4,7 +4,7 @@ import com.yi.backcli.entity.AccountLogin;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface AccountLoginMapper {
+public interface AccountLoginDao {
 
-    AccountLogin findByUsername();
+    AccountLogin findByUsername(String username);
 }
