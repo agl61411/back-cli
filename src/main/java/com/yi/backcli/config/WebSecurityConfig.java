@@ -4,7 +4,6 @@ import com.yi.backcli.security.CustomAuthenticationEntryPoint;
 import com.yi.backcli.security.JwtAuthenticationFilter;
 import com.yi.backcli.security.JwtAuthenticationProvider;
 import com.yi.backcli.util.HttpUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -42,6 +41,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .antMatchers("/login").permitAll()
+                .antMatchers("/register").permitAll()
                 .anyRequest().authenticated();
 
         http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint);

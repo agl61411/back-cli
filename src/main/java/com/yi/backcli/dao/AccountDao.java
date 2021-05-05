@@ -10,4 +10,8 @@ public interface AccountDao {
     AccountLogin findByUsername(String username);
 
     AccountInfo findInfoByAccountId(Long accountId);
+
+    void create(AccountLogin accountLogin);
+
+    void createInfo(AccountInfo accountInfo);
 }

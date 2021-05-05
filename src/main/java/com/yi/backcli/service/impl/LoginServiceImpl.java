@@ -4,6 +4,7 @@ import com.yi.backcli.dao.AccountDao;
 import com.yi.backcli.dto.Result;
 import com.yi.backcli.dto.UserInfo;
 import com.yi.backcli.entity.AccountInfo;
+import com.yi.backcli.entity.AccountLogin;
 import com.yi.backcli.entity.JwtUserDetail;
 import com.yi.backcli.security.JwtAuthenticationToken;
 import com.yi.backcli.service.LoginService;
@@ -49,4 +50,42 @@ public class LoginServiceImpl implements LoginService {
         return ResultUtils.success(userInfo);
     }
 
+    @Override
+    public Result register(Map<String, Object> map, HttpServletRequest request) {
+        String username = (String) map.get("username");
+        String password = (String) map.get("password");
+        String nickname = (String) map.get("nickname");
+        String type = (String) map.get("type");
+
+        AccountLogin accountLogin = new AccountLogin(username, password);
+
+        accountDao.create(accountLogin);
+
+        AccountInfo accountInfo = new AccountInfo(username, nickname, type, accountLogin.getId());
+
+        accountDao.createInfo(accountInfo);
+
+        return login(map, request);
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
