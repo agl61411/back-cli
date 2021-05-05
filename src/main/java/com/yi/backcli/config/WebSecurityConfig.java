@@ -3,7 +3,7 @@ package com.yi.backcli.config;
 import com.yi.backcli.security.JwtAuthenticationFilter;
 import com.yi.backcli.security.JwtAuthenticationProvider;
 import com.yi.backcli.security.JwtLoginFilter;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.yi.backcli.util.HttpUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -15,7 +15,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -39,9 +38,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .antMatchers("/login").permitAll()
+                .antMatchers("/logout").permitAll()
                 .anyRequest().authenticated();
 
-        http.logout().logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler());
+        http.exceptionHandling()
+                .authenticationEntryPoint((request, response, authenticationException) ->
+                        HttpUtils.write(response, 0, "检测到未登录状态，请先登录", null)
+                );
+
+        http.logout().logoutSuccessHandler((request, response, authentication) ->
+                HttpUtils.write(response, 200, "登出成功", null)
+        );
 
         http.addFilterBefore(new JwtLoginFilter(authenticationManager()), UsernamePasswordAuthenticationFilter.class);
 

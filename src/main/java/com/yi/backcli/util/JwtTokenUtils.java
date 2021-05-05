@@ -1,12 +1,18 @@
 package com.yi.backcli.util;
 
+import com.yi.backcli.dao.AccountLoginDao;
+import com.yi.backcli.entity.JwtUserDetail;
 import com.yi.backcli.security.GrantedAuthorityImpl;
 import com.yi.backcli.security.JwtAuthenticationToken;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
@@ -91,10 +97,10 @@ public class JwtTokenUtils implements Serializable {
 
     public static Boolean validateToken(String token, String username) {
         String userN = getUsernameFromToken(token);
-        return (userN.equals(username) && isTokenExpired(token));
+        return (userN.equals(username) && !isTokenExpired(token));
     }
 
-    public static Authentication getAuthenticationFromToken(HttpServletRequest request) {
+    public static Authentication getAuthenticationFromToken(HttpServletRequest request, AuthenticationManager manager) {
         Authentication authentication = null;
         String token = getToken(request);
         if (token != null) {
@@ -118,6 +124,7 @@ public class JwtTokenUtils implements Serializable {
                         authorities.add(new GrantedAuthorityImpl((String) ((Map<?, ?>) object).get("authority")));
                     }
                 }
+
                 authentication = new JwtAuthenticationToken(username, null, authorities, token);
             } else {
                 if (validateToken(token, SecurityUtils.getUsername())) {

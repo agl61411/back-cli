@@ -9,9 +9,14 @@ import java.io.PrintWriter;
 
 public class HttpUtils {
 
-    public static void write(HttpServletResponse response, Object data) {
+    public static void write(HttpServletResponse response, Integer code, String message, Object data) {
         response.setContentType("application/json;charset=utf-8");
-        Result result = ResultUtils.success(data);
+        Result result;
+        if (code == 200) {
+            result = ResultUtils.success(message, data);
+        } else {
+            result = ResultUtils.error(code, message);
+        }
         String json = JSONObject.toJSONString(result);
         try (PrintWriter out = response.getWriter()) {
             out.print(json);

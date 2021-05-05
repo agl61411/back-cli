@@ -4,10 +4,10 @@ import com.yi.backcli.security.JwtAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Collections;
 
 public class SecurityUtils {
 
@@ -15,7 +15,7 @@ public class SecurityUtils {
                                                String username,
                                                String password,
                                                AuthenticationManager manager) {
-        JwtAuthenticationToken token = new JwtAuthenticationToken(username, password);
+        JwtAuthenticationToken token = new JwtAuthenticationToken(username, password, Collections.emptyList());
         token.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         Authentication authentication = manager.authenticate(token);
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -23,8 +23,8 @@ public class SecurityUtils {
         return token;
     }
 
-    public static void checkAuthentication(HttpServletRequest request) {
-        Authentication authentication = JwtTokenUtils.getAuthenticationFromToken(request);
+    public static void checkAuthentication(HttpServletRequest request, AuthenticationManager manager) {
+        Authentication authentication = JwtTokenUtils.getAuthenticationFromToken(request, manager);
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 
@@ -39,10 +39,7 @@ public class SecurityUtils {
         String username = null;
         Authentication authentication = getAuthentication();
         if (authentication != null) {
-            Object principal = authentication.getPrincipal();
-            if (principal instanceof UserDetails) {
-                username = ((UserDetails) principal).getUsername();
-            }
+            username = authentication.getName();
         }
         return username;
     }
@@ -50,10 +47,7 @@ public class SecurityUtils {
     public static String getUsername(Authentication authentication) {
         String username = null;
         if (authentication != null) {
-            Object principal = authentication.getPrincipal();
-            if (principal instanceof UserDetails) {
-                username = ((UserDetails) principal).getUsername();
-            }
+            username = authentication.getName();
         }
         return username;
     }

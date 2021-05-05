@@ -9,6 +9,7 @@ import org.springframework.security.authentication.event.InteractiveAuthenticati
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.FilterChain;
@@ -67,7 +68,12 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
             eventPublisher.publishEvent(new InteractiveAuthenticationSuccessEvent(authResult, this.getClass()));
         }
         JwtAuthenticationToken token = new JwtAuthenticationToken(null, null, Collections.emptyList(), JwtTokenUtils.generateToken(authResult));
-        HttpUtils.write(response, token);
+        HttpUtils.write(response, 200, null, token);
+    }
+
+    @Override
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
+        HttpUtils.write(response, 0, failed.getMessage(), null);
     }
 
     private String getBody(HttpServletRequest request) {
