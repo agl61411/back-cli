@@ -1,18 +1,13 @@
 package com.yi.backcli.util;
 
-import com.yi.backcli.dao.AccountLoginDao;
-import com.yi.backcli.entity.JwtUserDetail;
 import com.yi.backcli.security.GrantedAuthorityImpl;
 import com.yi.backcli.security.JwtAuthenticationToken;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;

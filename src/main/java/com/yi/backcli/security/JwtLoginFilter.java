@@ -2,12 +2,18 @@ package com.yi.backcli.security;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.yi.backcli.dao.AccountDao;
+import com.yi.backcli.dto.UserInfo;
+import com.yi.backcli.entity.AccountInfo;
+import com.yi.backcli.entity.JwtUserDetail;
 import com.yi.backcli.util.HttpUtils;
 import com.yi.backcli.util.JwtTokenUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.event.InteractiveAuthenticationSuccessEvent;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -26,6 +32,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 
 public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
+
+    @Autowired
+    private AccountDao accountDao;
 
     public JwtLoginFilter(AuthenticationManager authenticationManager) {
         setAuthenticationManager(authenticationManager);
@@ -67,8 +76,13 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
         if (this.eventPublisher != null) {
             eventPublisher.publishEvent(new InteractiveAuthenticationSuccessEvent(authResult, this.getClass()));
         }
-        JwtAuthenticationToken token = new JwtAuthenticationToken(null, null, Collections.emptyList(), JwtTokenUtils.generateToken(authResult));
-        HttpUtils.write(response, 200, null, token);
+
+        JwtUserDetail detail = (JwtUserDetail) authResult.getPrincipal();
+        Long accountId = detail.getAccountId();
+        AccountInfo info = accountDao.findInfoByAccountId(accountId);
+        UserInfo userInfo = new UserInfo(accountId, info.getId(), info.getUsername(), info.getNickname(), info.getType(), detail.getAuthorities(), JwtTokenUtils.generateToken(authResult));
+
+        HttpUtils.write(response, 200, null, userInfo);
     }
 
     @Override

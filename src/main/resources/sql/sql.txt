@@ -5,7 +5,7 @@ create database backcli;
 use backcli;
 
 drop table if exists account_login;
-/** 登录信息表 */
+
 create table `account_login` (
     `id` bigint(20) not null auto_increment,
     `created_time` datetime default current_timestamp comment '创建时间',
@@ -16,5 +16,110 @@ create table `account_login` (
     primary key (`id`)
 ) engine=innodb default charset=utf8mb4 comment='登录信息表';
 
-
 insert into account_login(username, password) VALUES ('19832761764', '$2a$10$W0VR6vIA5ByonAl7xXQ1oOhKrNiBuzhr0luLxFGS7e3KAdR5TJZQK');
+
+drop table if exists account_info;
+
+create table account_info(
+     `id` bigint(20) not null auto_increment,
+     `created_time` datetime default current_timestamp comment '创建时间',
+     `modified_time` datetime default current_timestamp on update current_timestamp comment '修改时间',
+     `deprecated` tinyint(1) not null default '0' comment '是否弃用',
+     `username` varchar(50) not null comment '账号',
+     `nickname` varchar(20) not null comment '昵称',
+     `type` varchar(20) not null comment '类型',
+     `account_id` bigint(20) not null comment '关联id',
+     primary key (`id`),
+     unique(account_id),
+     foreign key(account_id) references account_login(id)
+) engine=innodb default charset=utf8mb4 comment='账号信息';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+drop table if exists daily_record;
+
+create table daily_record(
+    `id` bigint(20) not null auto_increment,
+    `created_time` datetime default current_timestamp comment '创建时间',
+    `modified_time` datetime default current_timestamp on update current_timestamp comment '修改时间',
+    `deprecated` tinyint(1) not null default '0' comment '是否弃用',
+    `record_time` datetime not null comment '记录时间',
+    primary key (`id`)
+) engine=innodb default charset=utf8mb4 comment='每日记录';
+
+drop table if exists to_do_item;
+
+create table to_do_item(
+    `id` bigint(20) not null auto_increment,
+    `created_time` datetime default current_timestamp comment '创建时间',
+    `modified_time` datetime default current_timestamp on update current_timestamp comment '修改时间',
+    `deprecated` tinyint(1) not null default '0' comment '是否弃用',
+    `content` varchar(255) not null comment '内容',
+    `detail` varchar(255) not null default '' comment '详情',
+    `type` varchar(20) not null comment '类型',
+    `completed` tinyint(1) not null default '0' comment '是否完成',
+    `record_id` bigint(20) not null comment '关联id',
+    primary key (`id`),
+    foreign key(record_id) references daily_record(id)
+) engine=innodb default charset=utf8mb4 comment='to_do_item';
+
+drop table if exists consumption_items;
+
+create table consumption_items(
+    `id` bigint(20) not null auto_increment,
+    `created_time` datetime default current_timestamp comment '创建时间',
+    `modified_time` datetime default current_timestamp on update current_timestamp comment '修改时间',
+    `deprecated` tinyint(1) not null default '0' comment '是否弃用',
+    `money` decimal(10, 2) not null comment '金额',
+    `content` varchar(255) not null comment '内容',
+    `type` varchar(20) not null comment '类型',
+    `record_id` bigint(20) not null comment '关联id',
+    primary key (`id`),
+    foreign key(record_id) references daily_record(id)
+) engine=innodb default charset=utf8mb4 comment='消费项';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,9 +1,10 @@
 package com.yi.backcli.config;
 
+import com.yi.backcli.security.CustomAuthenticationEntryPoint;
 import com.yi.backcli.security.JwtAuthenticationFilter;
 import com.yi.backcli.security.JwtAuthenticationProvider;
-import com.yi.backcli.security.JwtLoginFilter;
 import com.yi.backcli.util.HttpUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -23,8 +24,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService userDetailsService;
 
-    public WebSecurityConfig(UserDetailsService userDetailsService) {
+    private final CustomAuthenticationEntryPoint authenticationEntryPoint;
+
+    public WebSecurityConfig(UserDetailsService userDetailsService, CustomAuthenticationEntryPoint authenticationEntryPoint) {
         this.userDetailsService = userDetailsService;
+        this.authenticationEntryPoint = authenticationEntryPoint;
     }
 
     @Override
@@ -38,19 +42,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .antMatchers("/login").permitAll()
-                .antMatchers("/logout").permitAll()
                 .anyRequest().authenticated();
 
-        http.exceptionHandling()
-                .authenticationEntryPoint((request, response, authenticationException) ->
-                        HttpUtils.write(response, 0, "检测到未登录状态，请先登录", null)
-                );
+        http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint);
+
+        http.exceptionHandling().accessDeniedHandler((request, response, accessDeniedException) ->
+            HttpUtils.write(response, 0, accessDeniedException.getMessage(), null)
+        );
 
         http.logout().logoutSuccessHandler((request, response, authentication) ->
                 HttpUtils.write(response, 200, "登出成功", null)
         );
-
-        http.addFilterBefore(new JwtLoginFilter(authenticationManager()), UsernamePasswordAuthenticationFilter.class);
 
         http.addFilterBefore(new JwtAuthenticationFilter(authenticationManager()), UsernamePasswordAuthenticationFilter.class);
     }

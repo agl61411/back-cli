@@ -1,7 +1,5 @@
 package com.yi.backcli.entity;
 
-import java.util.Date;
-
 public class AccountLogin extends BaseEntity {
 
     private static final long serialVersionUID = -2134847606299943426L;
@@ -29,8 +27,7 @@ public class AccountLogin extends BaseEntity {
     public AccountLogin() {
     }
 
-    public AccountLogin(Long id, Date createdTime, Date modifiedTime, Boolean deprecated, String username, String password) {
-        super(id, createdTime, modifiedTime, deprecated);
+    public AccountLogin(String username, String password) {
         this.username = username;
         this.password = password;
     }
