@@ -18,6 +18,13 @@ public class ToDo extends BaseEntity {
   public ToDo() {
   }
 
+  public ToDo(String content, String detail, ToDoType type, Long recordId) {
+    this.content = content;
+    this.detail = detail;
+    this.type = type;
+    this.recordId = recordId;
+  }
+
   public ToDo(String content, String detail, ToDoType type, Boolean completed, Long recordId) {
     this.content = content;
     this.detail = detail;
