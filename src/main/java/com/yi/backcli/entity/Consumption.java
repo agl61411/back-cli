@@ -1,21 +1,23 @@
 package com.yi.backcli.entity;
 
+import com.yi.backcli.enums.ConsumptionType;
+
 import java.math.BigDecimal;
 
-public class ConsumptionItems extends BaseEntity {
+public class Consumption extends BaseEntity {
 
   private BigDecimal money;
 
   private String content;
 
-  private String type;
+  private ConsumptionType type;
 
   private Long recordId;
 
-  public ConsumptionItems() {
+  public Consumption() {
   }
 
-  public ConsumptionItems(BigDecimal money, String content, String type, Long recordId) {
+  public Consumption(BigDecimal money, String content, ConsumptionType type, Long recordId) {
     this.money = money;
     this.content = content;
     this.type = type;
@@ -38,11 +40,11 @@ public class ConsumptionItems extends BaseEntity {
     this.content = content;
   }
 
-  public String getType() {
+  public ConsumptionType getType() {
     return type;
   }
 
-  public void setType(String type) {
+  public void setType(ConsumptionType type) {
     this.type = type;
   }
 

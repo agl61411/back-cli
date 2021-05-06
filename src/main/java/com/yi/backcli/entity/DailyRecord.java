@@ -7,17 +7,28 @@ public class DailyRecord extends BaseEntity {
 
   private Date recordTime;
 
-  private List<ToDoItem> toDoList;
+  private Long accountId;
 
-  private List<ConsumptionItems> consumptionList;
+  private List<ToDo> toDoList;
+
+  private List<Consumption> consumptionList;
 
   public DailyRecord() {
   }
 
-  public DailyRecord(Date recordTime, List<ToDoItem> toDoList, List<ConsumptionItems> consumptionList) {
+  public DailyRecord(Date recordTime, Long accountId, List<ToDo> toDoList, List<Consumption> consumptionList) {
+    this.accountId = accountId;
     this.recordTime = recordTime;
     this.toDoList = toDoList;
     this.consumptionList = consumptionList;
+  }
+
+  public Long getAccountId() {
+    return accountId;
+  }
+
+  public void setAccountId(Long accountId) {
+    this.accountId = accountId;
   }
 
   public Date getRecordTime() {
@@ -28,19 +39,19 @@ public class DailyRecord extends BaseEntity {
     this.recordTime = recordTime;
   }
 
-  public List<ToDoItem> getToDoList() {
+  public List<ToDo> getToDoList() {
     return toDoList;
   }
 
-  public void setToDoList(List<ToDoItem> toDoList) {
+  public void setToDoList(List<ToDo> toDoList) {
     this.toDoList = toDoList;
   }
 
-  public List<ConsumptionItems> getConsumptionList() {
+  public List<Consumption> getConsumptionList() {
     return consumptionList;
   }
 
-  public void setConsumptionList(List<ConsumptionItems> consumptionList) {
+  public void setConsumptionList(List<Consumption> consumptionList) {
     this.consumptionList = consumptionList;
   }
 }

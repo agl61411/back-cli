@@ -6,13 +6,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class JwtAuthenticationProvider extends DaoAuthenticationProvider {
 
-    public JwtAuthenticationProvider(UserDetailsService userDetailsService) {
+    public JwtAuthenticationProvider(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
         setUserDetailsService(userDetailsService);
-        setPasswordEncoder(new BCryptPasswordEncoder());
+        setPasswordEncoder(passwordEncoder);
     }
 
     @Override

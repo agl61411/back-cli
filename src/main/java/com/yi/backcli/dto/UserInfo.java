@@ -1,5 +1,6 @@
 package com.yi.backcli.dto;
 
+import com.yi.backcli.enums.AccountType;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
@@ -14,7 +15,7 @@ public class UserInfo {
 
     private String nickname;
 
-    private String type;
+    private AccountType type;
 
     private Collection<GrantedAuthority> authorities;
 
@@ -23,7 +24,7 @@ public class UserInfo {
     public UserInfo() {
     }
 
-    public UserInfo(Long accountId, Long infoId, String username, String nickname, String type, Collection<GrantedAuthority> authorities, String token) {
+    public UserInfo(Long accountId, Long infoId, String username, String nickname, AccountType type, Collection<GrantedAuthority> authorities, String token) {
         this.accountId = accountId;
         this.infoId = infoId;
         this.username = username;
@@ -65,11 +66,11 @@ public class UserInfo {
         this.nickname = nickname;
     }
 
-    public String getType() {
+    public AccountType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(AccountType type) {
         this.type = type;
     }
 

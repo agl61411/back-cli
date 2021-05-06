@@ -4,6 +4,8 @@ import com.yi.backcli.security.CustomAuthenticationEntryPoint;
 import com.yi.backcli.security.JwtAuthenticationFilter;
 import com.yi.backcli.security.JwtAuthenticationProvider;
 import com.yi.backcli.util.HttpUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -14,12 +16,16 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private final static Logger log = LoggerFactory.getLogger(WebSecurityConfig.class);
 
     private final UserDetailsService userDetailsService;
 
@@ -32,7 +38,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(new JwtAuthenticationProvider(userDetailsService));
+        auth.authenticationProvider(new JwtAuthenticationProvider(userDetailsService, passwordEncoder()));
+
     }
 
     @Override
@@ -61,5 +68,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected AuthenticationManager authenticationManager() throws Exception {
         return super.authenticationManager();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        log.info("-----------------------创建PasswordEncoder---------------------------");
+        return new BCryptPasswordEncoder();
     }
 }

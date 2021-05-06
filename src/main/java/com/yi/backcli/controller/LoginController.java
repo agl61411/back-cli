@@ -23,6 +23,7 @@ public class LoginController {
 
     @RequestMapping(value = "register", method = RequestMethod.POST)
     public Result register(@RequestBody Map<String, Object> map, HttpServletRequest request) {
-        return loginService.register(map, request);
+        loginService.register(map);
+        return loginService.login(map, request);
     }
 }

@@ -9,5 +9,5 @@ public interface LoginService {
 
     Result login(Map<String, Object> map, HttpServletRequest request);
 
-    Result register(Map<String, Object> map, HttpServletRequest request);
+    void register(Map<String, Object> map);
 }

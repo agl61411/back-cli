@@ -5,21 +5,40 @@
 <mapper namespace="com.yi.backcli.dao.AccountDao">
 
     <select id="findByUsername" resultType="com.yi.backcli.entity.AccountLogin">
-        select
-               id, created_time, modified_time, deprecated, username, password
-        from
-             account_login
-        where
-              username = #{username};
+        select id,
+               created_time,
+               modified_time,
+               deprecated,
+               username,
+               password
+        from account_login
+        where username = #{username};
     </select>
 
     <select id="findInfoByAccountId" resultType="com.yi.backcli.entity.AccountInfo">
-        select
-            id, created_time, modified_time, deprecated, username, nickname, type, account_id
-        from
-            account_info
-        where
-            account_id = #{accountId};
+        select id,
+               created_time,
+               modified_time,
+               deprecated,
+               username,
+               nickname,
+               type,
+               account_id
+        from account_info
+        where account_id = #{accountId};
     </select>
+
+    <insert id="create" parameterType="com.yi.backcli.entity.AccountLogin" useGeneratedKeys="true" flushCache="true"
+            keyProperty="id">
+        insert into account_login(username, password)
+        VALUES (#{username}, #{password});
+    </insert>
+
+    <insert id="createInfo" parameterType="com.yi.backcli.entity.AccountInfo" useGeneratedKeys="true" flushCache="true"
+            keyProperty="id">
+        insert into account_info(username, nickname, type, account_id)
+        VALUES (#{username}, #{nickname}, #{type}, #{accountId});
+    </insert>
+
 
 </mapper>

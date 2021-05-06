@@ -1,12 +1,14 @@
 package com.yi.backcli.entity;
 
+import com.yi.backcli.enums.AccountType;
+
 public class AccountInfo extends BaseEntity {
 
   private String username;
 
   private String nickname;
 
-  private String type;
+  private AccountType type;
 
   private Long accountId;
 
@@ -14,7 +16,7 @@ public class AccountInfo extends BaseEntity {
 
   }
 
-  public AccountInfo(String username, String nickname, String type, Long accountId) {
+  public AccountInfo(String username, String nickname, AccountType type, Long accountId) {
     this.username = username;
     this.nickname = nickname;
     this.type = type;
@@ -37,11 +39,11 @@ public class AccountInfo extends BaseEntity {
     this.nickname = nickname;
   }
 
-  public String getType() {
+  public AccountType getType() {
     return type;
   }
 
-  public void setType(String type) {
+  public void setType(AccountType type) {
     this.type = type;
   }
 

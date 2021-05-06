@@ -1,22 +1,24 @@
 package com.yi.backcli.entity;
 
 
-public class ToDoItem extends BaseEntity {
+import com.yi.backcli.enums.ToDoType;
+
+public class ToDo extends BaseEntity {
 
   private String content;
 
   private String detail;
 
-  private String type;
+  private ToDoType type;
 
   private Boolean completed;
 
   private Long recordId;
 
-  public ToDoItem() {
+  public ToDo() {
   }
 
-  public ToDoItem(String content, String detail, String type, Boolean completed, Long recordId) {
+  public ToDo(String content, String detail, ToDoType type, Boolean completed, Long recordId) {
     this.content = content;
     this.detail = detail;
     this.type = type;
@@ -40,11 +42,11 @@ public class ToDoItem extends BaseEntity {
     this.detail = detail;
   }
 
-  public String getType() {
+  public ToDoType getType() {
     return type;
   }
 
-  public void setType(String type) {
+  public void setType(ToDoType type) {
     this.type = type;
   }
 
