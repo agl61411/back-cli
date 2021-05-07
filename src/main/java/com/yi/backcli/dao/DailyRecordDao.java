@@ -10,7 +10,7 @@ public interface DailyRecordDao {
 
     void create(DailyRecord record);
 
-    DailyRecord findRecordById(Long id, Long accountId);
-
     DailyRecord findRecordByTime(Long accountId, Date recordTime);
+
+    DailyRecord findFullRecordByTime(Long accountId, Date recordTime);
 }

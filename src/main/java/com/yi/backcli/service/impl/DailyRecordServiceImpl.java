@@ -42,8 +42,9 @@ public class DailyRecordServiceImpl implements DailyRecordService {
     }
 
     @Override
-    public Result findRecordById(Long accountId, Long id) {
-        DailyRecord record = dailyRecordDao.findRecordById(id, accountId);
+    public Result findFullRecordByTime(Long accountId, Long recordTime) {
+        Date time = new Date(recordTime);
+        DailyRecord record = dailyRecordDao.findFullRecordByTime(accountId, time);
         return ResultUtils.success(record);
     }
 

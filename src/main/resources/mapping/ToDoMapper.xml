@@ -4,7 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yi.backcli.dao.ToDoDao">
 
-    <insert id="create" parameterType="com.yi.backcli.entity.ToDo">
+    <insert id="create" parameterType="com.yi.backcli.entity.ToDo" useGeneratedKeys="true" flushCache="true"
+            keyProperty="id">
         insert into to_do(content, detail, type, record_id)
         values (#{content}, #{detail}, #{type}, #{recordId});
     </insert>

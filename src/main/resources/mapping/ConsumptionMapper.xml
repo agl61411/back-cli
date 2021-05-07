@@ -4,7 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yi.backcli.dao.ConsumptionDao">
 
-    <insert id="create" parameterType="com.yi.backcli.entity.Consumption">
+    <insert id="create" parameterType="com.yi.backcli.entity.Consumption" useGeneratedKeys="true" flushCache="true"
+            keyProperty="id">
         insert into consumption(money, content, type, record_id)
         values (#{money}, #{content}, #{type}, #{recordId});
     </insert>

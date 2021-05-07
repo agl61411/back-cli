@@ -21,8 +21,8 @@ public class DailyRecordController {
         return dailyRecordService.create(accountId, map);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Result findRecordById(@RequestHeader(name = "account_id")Long accountId, @PathVariable Long id) {
-        return dailyRecordService.findRecordById(accountId, id);
+    @RequestMapping(value = "/{recordTime}", method = RequestMethod.GET)
+    public Result findFullRecordByTime(@RequestHeader(name = "account_id")Long accountId, @PathVariable Long recordTime) {
+        return dailyRecordService.findFullRecordByTime(accountId, recordTime);
     }
 }

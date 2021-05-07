@@ -16,26 +16,22 @@
         <collection property="consumptionList" column="id" javaType="List" ofType="com.yi.backcli.entity.Consumption" select="searchConsumptionListById"/>
     </resultMap>
 
-    <select id="findRecordById" resultMap="recordMap">
+    <select id="findFullRecordByTime" resultMap="recordMap">
         select id, created_time, modified_time, deprecated, record_time, account_id
         from daily_record
-        where id = #{id}
+        where record_time = #{recordTime}
           and account_id = #{accountId};
     </select>
     <select id="searchToDoListById" resultType="com.yi.backcli.entity.ToDo">
         select id, created_time, modified_time, deprecated, content, detail, type, completed, record_id
         from to_do
-        where id = #{id};
+        where record_id = #{id};
     </select>
     <select id="searchConsumptionListById" resultType="com.yi.backcli.entity.Consumption">
         select id, created_time, modified_time, deprecated, money, content, type, record_id
         from consumption
-        where id = #{id};
+        where record_id = #{id};
     </select>
-
-
-
-
 
     <select id="findRecordByTime" resultType="com.yi.backcli.entity.DailyRecord">
         select id, created_time, modified_time, deprecated, record_time, account_id
