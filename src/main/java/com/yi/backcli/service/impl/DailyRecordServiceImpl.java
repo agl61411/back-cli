@@ -10,7 +10,9 @@ import com.yi.backcli.service.DailyRecordService;
 import com.yi.backcli.util.ResultUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 @Service
@@ -38,6 +40,8 @@ public class DailyRecordServiceImpl implements DailyRecordService {
         dailyRecordDao.create(record);
 
         record.setDeprecated(false);
+        record.setToDoList(Collections.emptyList());
+        record.setConsumptionList(Collections.emptyList());
         return ResultUtils.success(record);
     }
 
@@ -45,6 +49,11 @@ public class DailyRecordServiceImpl implements DailyRecordService {
     public Result findFullRecordByTime(Long accountId, Long recordTime) {
         Date time = new Date(recordTime);
         DailyRecord record = dailyRecordDao.findFullRecordByTime(accountId, time);
+        if (record == null) {
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("recordTime", recordTime);
+            return create(accountId, map);
+        }
         return ResultUtils.success(record);
     }
 
