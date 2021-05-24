@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.io.Serializable;
 
-@JsonInclude(value = JsonInclude.Include.NON_NULL)
 public class Result implements Serializable {
 
     private static final long serialVersionUID = 1478897505266043085L;

@@ -49,11 +49,6 @@ public class DailyRecordServiceImpl implements DailyRecordService {
     public Result findFullRecordByTime(Long accountId, Long recordTime) {
         Date time = new Date(recordTime);
         DailyRecord record = dailyRecordDao.findFullRecordByTime(accountId, time);
-        if (record == null) {
-            HashMap<String, Object> map = new HashMap<>();
-            map.put("recordTime", recordTime);
-            return create(accountId, map);
-        }
         return ResultUtils.success(record);
     }
 
