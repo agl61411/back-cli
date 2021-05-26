@@ -11,11 +11,21 @@ public class ToDo extends BaseEntity {
 
   private ToDoType type;
 
+  private Integer targetDuration;
+
+  private Integer actualDuration;
+
   private Boolean completed;
 
   private Long recordId;
 
   public ToDo() {
+  }
+
+  public ToDo(String content, ToDoType type, Long recordId) {
+    this.content = content;
+    this.type = type;
+    this.recordId = recordId;
   }
 
   public ToDo(String content, String detail, ToDoType type, Long recordId) {
@@ -25,11 +35,18 @@ public class ToDo extends BaseEntity {
     this.recordId = recordId;
   }
 
-  public ToDo(String content, String detail, ToDoType type, Boolean completed, Long recordId) {
+  public ToDo(String content, ToDoType type, Integer targetDuration, Long recordId) {
+    this.content = content;
+    this.type = type;
+    this.targetDuration = targetDuration;
+    this.recordId = recordId;
+  }
+
+  public ToDo(String content, String detail, ToDoType type, Integer targetDuration, Long recordId) {
     this.content = content;
     this.detail = detail;
     this.type = type;
-    this.completed = completed;
+    this.targetDuration = targetDuration;
     this.recordId = recordId;
   }
 
@@ -71,5 +88,21 @@ public class ToDo extends BaseEntity {
 
   public void setRecordId(Long recordId) {
     this.recordId = recordId;
+  }
+
+  public Integer getTargetDuration() {
+    return targetDuration;
+  }
+
+  public void setTargetDuration(Integer targetDuration) {
+    this.targetDuration = targetDuration;
+  }
+
+  public Integer getActualDuration() {
+    return actualDuration;
+  }
+
+  public void setActualDuration(Integer actualDuration) {
+    this.actualDuration = actualDuration;
   }
 }

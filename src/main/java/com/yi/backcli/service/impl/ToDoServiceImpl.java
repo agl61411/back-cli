@@ -7,6 +7,9 @@ import com.yi.backcli.service.ToDoService;
 import com.yi.backcli.util.ResultUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.Map;
+
 @Service
 public class ToDoServiceImpl implements ToDoService {
 
@@ -20,6 +23,22 @@ public class ToDoServiceImpl implements ToDoService {
     public Result create(ToDo toDo) {
         toDoDao.create(toDo);
         return ResultUtils.success(toDo.getId());
+    }
+
+    @Override
+    public Result update(ToDo toDo) {
+        toDoDao.update(toDo);
+        return ResultUtils.success("更新TODO项成功");
+    }
+
+    @Override
+    public Result complete(Map<String, Object> map) {
+        Integer[] ids = (Integer[]) map.get("ids");
+        if (ids == null || ids.length <= 0) {
+            throw new IllegalArgumentException("参数错误(ids)");
+        }
+        toDoDao.complete(ids);
+        return ResultUtils.success("操作成功");
     }
 
 }

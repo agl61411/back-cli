@@ -9,6 +9,8 @@ public class DailyRecord extends BaseEntity {
 
   private Long accountId;
 
+  private Boolean finished;
+
   private List<ToDo> toDoList;
 
   private List<Consumption> consumptionList;
@@ -17,10 +19,18 @@ public class DailyRecord extends BaseEntity {
   }
 
   public DailyRecord(Date recordTime, Long accountId, List<ToDo> toDoList, List<Consumption> consumptionList) {
-    this.accountId = accountId;
     this.recordTime = recordTime;
+    this.accountId = accountId;
     this.toDoList = toDoList;
     this.consumptionList = consumptionList;
+  }
+
+  public Date getRecordTime() {
+    return recordTime;
+  }
+
+  public void setRecordTime(Date recordTime) {
+    this.recordTime = recordTime;
   }
 
   public Long getAccountId() {
@@ -31,12 +41,12 @@ public class DailyRecord extends BaseEntity {
     this.accountId = accountId;
   }
 
-  public Date getRecordTime() {
-    return recordTime;
+  public Boolean getFinished() {
+    return finished;
   }
 
-  public void setRecordTime(Date recordTime) {
-    this.recordTime = recordTime;
+  public void setFinished(Boolean finished) {
+    this.finished = finished;
   }
 
   public List<ToDo> getToDoList() {

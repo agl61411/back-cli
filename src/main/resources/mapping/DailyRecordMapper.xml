@@ -46,4 +46,8 @@
         VALUES (#{recordTime}, #{accountId});
     </insert>
 
+    <update id="updateFinished" parameterType="java.lang.Integer">
+        update daily_record set finished = 1 where id = #{id}
+    </update>
+
 </mapper>

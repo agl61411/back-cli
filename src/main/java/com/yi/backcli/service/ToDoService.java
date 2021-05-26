@@ -7,4 +7,8 @@ import java.util.Map;
 
 public interface ToDoService {
     Result create(ToDo toDo);
+
+    Result update(ToDo toDo);
+
+    Result complete(Map<String, Object> map);
 }

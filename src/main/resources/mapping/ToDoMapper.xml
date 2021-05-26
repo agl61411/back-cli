@@ -6,8 +6,33 @@
 
     <insert id="create" parameterType="com.yi.backcli.entity.ToDo" useGeneratedKeys="true" flushCache="true"
             keyProperty="id">
-        insert into to_do(content, detail, type, record_id)
-        values (#{content}, #{detail}, #{type}, #{recordId});
+        insert into to_do(content, type, record_id
+            <if test="targetDuration != null">, target_duration</if>
+            <if test="detail != null">, detail</if>
+        ) values (#{content}, #{type}, #{recordId}
+            <if test="targetDuration != null">, #{targetDuration}</if>
+            <if test="detail != null">, #{detail}</if>
+        )
     </insert>
+
+    <update id="update" parameterType="com.yi.backcli.entity.ToDo" flushCache="true">
+        update to_do
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="content != null">content = #{content},</if>
+            <if test="detail != null">detail = #{detail},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="targetDuration != null">target_duration = #{targetDuration},</if>
+            <if test="actualDuration != null">actual_duration = #{actualDuration},</if>
+            <if test="deprecated != null">deprecated = #{deprecated},</if>
+        </trim>
+        where id=#{id}
+    </update>
+
+    <update id="complete" parameterType="list" flushCache="true">
+        update to_do set completed = 1 where id in
+        <foreach collection="array" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </update>
 
 </mapper>

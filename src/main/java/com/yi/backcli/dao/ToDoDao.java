@@ -8,4 +8,7 @@ public interface ToDoDao {
 
     void create(ToDo toDo);
 
+    void update(ToDo toDo);
+
+    void complete(Integer[] ids);
 }
