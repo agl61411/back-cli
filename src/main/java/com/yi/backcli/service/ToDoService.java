@@ -11,4 +11,6 @@ public interface ToDoService {
     Result update(ToDo toDo);
 
     Result complete(Map<String, Object> map);
+
+    Result deprecate(Map<String, Object> map);
 }

@@ -31,4 +31,9 @@ public class ToDoController {
     public Result complete(@RequestBody Map<String, Object> map) {
         return toDoService.complete(map);
     }
+
+    @RequestMapping(value = "/deprecate", method = RequestMethod.PUT)
+    public Result deprecate(@RequestBody Map<String, Object> map) {
+        return toDoService.deprecate(map);
+    }
 }

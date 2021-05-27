@@ -3,6 +3,8 @@ package com.yi.backcli.dao;
 import com.yi.backcli.entity.ToDo;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface ToDoDao {
 
@@ -10,5 +12,7 @@ public interface ToDoDao {
 
     void update(ToDo toDo);
 
-    void complete(Integer[] ids);
+    void complete(List<?> ids);
+
+    void deprecate(List<?> ids);
 }

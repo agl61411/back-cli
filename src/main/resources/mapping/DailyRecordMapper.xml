@@ -10,20 +10,20 @@
         <result property="modifiedTime" column="modified_time" />
         <result property="deprecated" column="deprecated" />
         <result property="recordTime" column="record_time" />
-        <result property="accountId" column="account_id" />
+        <result property="finished" column="finished" />
         <result property="accountId" column="account_id" />
         <collection property="toDoList" column="id" javaType="List" ofType="com.yi.backcli.entity.ToDo" select="searchToDoListById"/>
         <collection property="consumptionList" column="id" javaType="List" ofType="com.yi.backcli.entity.Consumption" select="searchConsumptionListById"/>
     </resultMap>
 
     <select id="findFullRecordByTime" resultMap="recordMap">
-        select id, created_time, modified_time, deprecated, record_time, account_id
+        select id, created_time, modified_time, deprecated, record_time, account_id, finished
         from daily_record
         where record_time = #{recordTime}
           and account_id = #{accountId};
     </select>
     <select id="searchToDoListById" resultType="com.yi.backcli.entity.ToDo">
-        select id, created_time, modified_time, deprecated, content, detail, type, completed, record_id
+        select id, created_time, modified_time, deprecated, content, detail, type, completed, record_id, target_duration, actual_duration
         from to_do
         where record_id = #{id};
     </select>
@@ -34,7 +34,7 @@
     </select>
 
     <select id="findRecordByTime" resultType="com.yi.backcli.entity.DailyRecord">
-        select id, created_time, modified_time, deprecated, record_time, account_id
+        select id, created_time, modified_time, deprecated, record_time, account_id, finished
         from daily_record
         where record_time = #{recordTime}
           and account_id = #{accountId};

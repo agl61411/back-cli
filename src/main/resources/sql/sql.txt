@@ -81,7 +81,7 @@ alter table to_do add column target_duration tinyint unsigned comment '目标时
 alter table to_do add column actual_duration tinyint unsigned comment '实际时长' after target_duration;
 
 // 5.26 record 添加是否完成
-alter table daily_record add column finished tinyint(1) unsigned not null default '0' comment '是否已结束' after record_time;
+alter table daily_record add column finished tinyint(1) not null default '0' comment '是否已结束' after record_time;
 
 
 

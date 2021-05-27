@@ -40,6 +40,7 @@ public class DailyRecordServiceImpl implements DailyRecordService {
         dailyRecordDao.create(record);
 
         record.setDeprecated(false);
+        record.setFinished(false);
         record.setToDoList(Collections.emptyList());
         record.setConsumptionList(Collections.emptyList());
         return ResultUtils.success(record);
